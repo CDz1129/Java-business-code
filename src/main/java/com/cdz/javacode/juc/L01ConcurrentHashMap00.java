@@ -18,11 +18,13 @@ import java.util.stream.LongStream;
  * Description:
  * User: CDz
  * Create: 2020-03-25 00:05
+ *
+ * putall size 状态错误使用
  **/
 @Slf4j
 @RestController
 @RequestMapping("concurrentHashMap-test")
-public class L01ConcurrentHashMap {
+public class L01ConcurrentHashMap00 {
 
     private static int THREAD_COUNT = 10;
 
@@ -56,6 +58,9 @@ public class L01ConcurrentHashMap {
             int gap = ITEM_COUNT - concurrentHashMap.size();
             log.info("gap size:{}",gap);
             //补充元素
+            //putAll不是一个原子操作
+            //内部还是for添加的，
+            //那么size就可能会有中间状态
             concurrentHashMap.putAll(getData(gap));
         }));
 
@@ -65,9 +70,40 @@ public class L01ConcurrentHashMap {
 
         //最后添加的元素个数会是1000个吗？
         log.info("map size:{}",concurrentHashMap.size());
-
         return "ok";
     }
+    @RequestMapping("right")
+    public String right() throws InterruptedException {
+        //生成 900
+        ConcurrentHashMap<String, Long> concurrentHashMap = getData(ITEM_COUNT - 100);
+        log.info("init size:{}",concurrentHashMap.size());
+
+        //并行执行
+        ForkJoinPool forkJoinPool = new ForkJoinPool(THREAD_COUNT);
+
+        forkJoinPool.execute(()-> IntStream.rangeClosed(1,10).parallel().forEach(i->{
+
+            //解决办法，在并发的地方加上锁处理
+            synchronized (concurrentHashMap){
+
+                int gap = ITEM_COUNT - concurrentHashMap.size();
+                log.info("gap size:{}",gap);
+                concurrentHashMap.putAll(getData(gap));
+            }
+
+        }));
+
+        forkJoinPool.shutdown();
+
+        forkJoinPool.awaitTermination(1, TimeUnit.HOURS);
+
+        log.info("map size:{}",concurrentHashMap.size());
+        return "ok";
+    }
+
+
+
+
 
 
 
