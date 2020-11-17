@@ -4,10 +4,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.LongAdder;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -101,12 +103,13 @@ public class L01ConcurrentHashMap00 {
         return "ok";
     }
 
-
-
-
-
-
-
+    public static void main(String[] args) {
+        String s = "hello";
+        String s2 = s;
+        s = "world";
+        System.out.println(s);
+        System.out.println(s2);
+    }
 
 
 }

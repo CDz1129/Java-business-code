@@ -4,8 +4,7 @@ import org.springframework.util.StopWatch;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -32,15 +31,15 @@ public class RedisClientTest {
 
 //        stopWatch.start("单连接 创造数据");
         //创造数据
-        for (int i = 0; i < 1000; i++) {
-            String set = jedis.set(key, i+"");
+        for (int i = 0; i < 100; i++) {
+            String set = jedis.set(key, 1+"");
         }
 //        stopWatch.stop();
 
         stopWatch.start("单个连接读取数据");
         //单个连接读取数据
-        for (int i = 0; i < 10000; i++) {
-            String s = jedis.get(key);
+        for (int i = 0; i < 100; i++) {
+            Long incr = jedis.incr(key);
         }
         stopWatch.stop();
 
@@ -52,20 +51,46 @@ public class RedisClientTest {
             executorService.submit(()->{
                 Jedis resource = jedisPool.getResource();
                 try {
-                    String s = resource.get(key);
+
+                    String s = jedis.get(key);
                 } finally {
                     resource.close();
                 }
             });
         }
         while (executorService.isTerminated());
+
+
+        CountDownLatch countDownLatch = new CountDownLatch(100);
+        stopWatch.start("单个连接 多线程读取数据");
+        //单个连接读取数据
+        for (int i = 0; i < 100; i++) {
+            int a= i;
+            executorService.submit(()->{
+                Long incr = jedis.incr(key);
+                System.out.println("单连接多线程："+incr);
+//                countDownLatch.countDown();
+            });
+        }
+
+        while (executorService.isTerminated());
+//        try {
+//            countDownLatch.await();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+
+        stopWatch.stop();
+
+
         stopWatch.start("poll 读取数据");
         //poll 读取数据
-        for (int i = 0; i < 10000; i++) {
+        for (int i = 0; i < 100; i++) {
             executorService.submit(()->{
                 Jedis resource = jedisPool.getResource();
                 try {
-                    String s = resource.get(key);
+                    Long incr = jedis.incr(key);
+                    System.out.println("连接池多线程："+incr);
                 } finally {
                     resource.close();
                 }
