@@ -19,7 +19,7 @@ import redis.clients.jedis.JedisPoolConfig;
  * 连接超时时间 5S
  * 获取连接超时时间 10S 设置
  **/
-public class L4ConnetPollProperties {
+public class L04ConnetPollProperties {
 
     public static void main(String[] args) {
         //Hikari 连接池
