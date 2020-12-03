@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.stereotype.Repository;
 
 @SpringBootApplication
-@EnableJpaAuditing
 public class JavacodeApplication {
 
     public static void main(String[] args) {
