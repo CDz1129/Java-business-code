@@ -15,7 +15,7 @@ import static javax.persistence.GenerationType.IDENTITY;
  * @date 2021/1/5 16:04
  * @since 1.0.0
  */
-@Entity
+@Entity(name = "demo.user")
 @Data
 public class User {
     @Id

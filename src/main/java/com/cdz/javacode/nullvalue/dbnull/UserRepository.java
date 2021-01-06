@@ -23,7 +23,8 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
     @Query(nativeQuery = true,value = "select nullif(sum(scroll),0) from user ")
     Long right1();
-    @Query(nativeQuery = true,value = "select count(*) from user ")
+    //  JPA中 ，同源 不同库 可以使用 库名.表名进行访问
+    @Query(nativeQuery = true,value = "select count(*) from demo.user ")
     Long right2();
     @Query(nativeQuery = true,value = "select * from user where scroll is null ")
     Long right3();
