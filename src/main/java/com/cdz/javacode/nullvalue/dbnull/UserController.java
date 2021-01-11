@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * UserController
  *
@@ -41,5 +43,9 @@ public class UserController {
     @GetMapping("right3")
     public Long right3(){
         return userRepository.right3();
+    }
+    @GetMapping("test")
+    public List<User> test(){
+        return userRepository.findAll();
     }
 }
