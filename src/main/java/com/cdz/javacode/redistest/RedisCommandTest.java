@@ -44,18 +44,40 @@ public class RedisCommandTest {
     public void testPipline(){
         ValueOperations valueOperations = redisTemplate.opsForValue();
         StopWatch stopWatch = new StopWatch();
+
+
         // -------------- redisTemplate::executePipelined(redisTemplate默认是Lettuce)----------------
         stopWatch.start("redisTemplate pipeline");
         List list = redisTemplate.executePipelined((RedisCallback<Object>) redisConnection -> {
-            redisConnection.openPipeline();
             for (int i = 0; i < 100; i++) {
                 redisConnection.incr(testKey.getBytes(StandardCharsets.UTF_8));
             }
-            redisConnection.closePipeline();
             return null;
         });
         stopWatch.stop();
         log.info("redisTemplate res:{}",valueOperations.get(testKey));
+
+
+        // -------------- redisTemplate::executePipelined(redisTemplate默认是Lettuce)----------------
+        stopWatch.start("redisTemplate execute not executePipelined");
+        Object execute = redisTemplate.execute((RedisCallback<Object>) redisConnection -> {
+            for (int i = 0; i < 100; i++) {
+                redisConnection.incr(testKey.getBytes(StandardCharsets.UTF_8));
+            }
+            return null;
+        });
+        stopWatch.stop();
+        log.info("redisTemplate execute res:{}",valueOperations.get(testKey));
+
+        // -------------- 使用jedis Connection ----------------
+        stopWatch.start("jedis pipeline");
+        Pipeline pipelined = jedis.pipelined();
+        for (int i = 0; i < 100; i++) {
+            pipelined.incr(testKey.getBytes(StandardCharsets.UTF_8));
+        }
+        List<Object> objects = pipelined.syncAndReturnAll();
+        stopWatch.stop();
+        log.info("jedis res:{}",valueOperations.get(testKey));
 
         // -------------- 使用LettuceConnection ----------------
         stopWatch.start("Lettuce real pip");
@@ -83,15 +105,7 @@ public class RedisCommandTest {
         stopWatch.stop();
         log.info("Lettuce real pip res:{}",valueOperations.get(testKey));
 
-        // -------------- 使用jedis Connection ----------------
-        stopWatch.start("jedis pipeline");
-        Pipeline pipelined = jedis.pipelined();
-        for (int i = 0; i < 100; i++) {
-            pipelined.incr(testKey.getBytes(StandardCharsets.UTF_8));
-        }
-        List<Object> objects = pipelined.syncAndReturnAll();
-        stopWatch.stop();
-        log.info("jedis res:{}",valueOperations.get(testKey));
+
 
         //  -------------- 进阶使用redisTemplate 只设置commands.setAutoFlushCommands(false); ----------------
         stopWatch.start("redisTemplate pipeline 二次尝试");
@@ -107,11 +121,9 @@ public class RedisCommandTest {
 
         stopWatch.start("redisTemplate pipeline 三次尝试");
         List list3 = redisTemplate.executePipelined((RedisCallback<Object>) redisConnection -> {
-            redisConnection.openPipeline();
             for (int i = 0; i < 100; i++) {
                 redisConnection.incr(testKey.getBytes(StandardCharsets.UTF_8));
             }
-            redisConnection.closePipeline();
             return null;
         });
         stopWatch.stop();
@@ -121,13 +133,37 @@ public class RedisCommandTest {
     }
 
     /**
+     * 第一次：
      * ---------------------------------------------
      * ns         %     Task name
      * ---------------------------------------------
-     * 699023700  089%  redisTemplate pipeline
-     * 019157100  002%  Lettuce real pip
-     * 027347200  003%  jedis pipeline
-     * 018890000  002%  redisTemplate pipeline 二次尝试
-     * 019090300  002%  redisTemplate pipeline 三次尝试
+     * 615129200  075%  redisTemplate pipeline  //可以看到第一个建立连接需要耗时比较长
+     * 137835000  017%  redisTemplate execute not executePipelined
+     * 025660500  003%  jedis pipeline
+     * 013333900  002%  Lettuce real pip
+     * 014415200  002%  redisTemplate pipeline 二次尝试
+     * 009258200  001%  redisTemplate pipeline 三次尝试
+     *
+     * 第二次：
+     * ---------------------------------------------
+     * ns         %     Task name
+     * ---------------------------------------------
+     * 028989500  009%  redisTemplate pipeline
+     * 286694100  085%  redisTemplate execute not executePipelined
+     * 001764500  001%  jedis pipeline
+     * 006789700  002%  Lettuce real pip
+     * 007459100  002%  redisTemplate pipeline 二次尝试
+     * 006603600  002%  redisTemplate pipeline 三次尝试
+     *
+     * 第三次：
+     * ---------------------------------------------
+     * ns         %     Task name
+     * ---------------------------------------------
+     * 009823200  005%  redisTemplate pipeline
+     * 172719600  087%  redisTemplate execute not executePipelined
+     * 002304900  001%  jedis pipeline
+     * 004799700  002%  Lettuce real pip
+     * 004264400  002%  redisTemplate pipeline 二次尝试
+     * 005717000  003%  redisTemplate pipeline 三次尝试
      */
 }
