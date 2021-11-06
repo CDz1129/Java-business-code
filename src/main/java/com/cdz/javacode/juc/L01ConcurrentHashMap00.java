@@ -107,6 +107,11 @@ public class L01ConcurrentHashMap00 {
         String s = "hello";
         String s2 = s;
         s = "world";
+        IntStream.rangeClosed(0,110)
+                .skip(50)
+                .limit(50)
+                .filter(e->e%2==1)
+                .forEach(System.out::println);
         System.out.println(s);
         System.out.println(s2);
     }
