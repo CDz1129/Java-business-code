@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="user_report_day" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0d4ef097-bd37-4701-9d38-9287bbbc316b">
+	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Dataset1" uuid="4e453afe-34be-48e7-90a8-80baf9e7fe45">
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="trade_id" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="ctime" class="java.lang.String"/>
+	<parameter name="ptime" class="java.lang.String"/>
+	<parameter name="uid" class="java.lang.String"/>
+	<parameter name="start_time" class="java.lang.String"/>
+	<parameter name="end_time" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="coin" class="java.lang.String"/>
+	<field name="balance" class="java.lang.String"/>
+	<field name="trade_id" class="java.lang.String"/>
+	<group name="Group1"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="165">
+			<staticText>
+				<reportElement x="260" y="80" width="270" height="80" uuid="687cef67-1b96-4de4-81f1-d3498da64ab9"/>
+				<text><![CDATA[株式会社ディーカレット
+〒102-0071
+東京都千代田区富士見2-10-2　飯田橋グラン・ブルーム
+暗号資産交換業者　関東財務局長　第00016号
+認定資金決済事業者協会：
+一般社団法人日本暗号資産取引業協会]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="70" width="100" height="30" uuid="72f4b917-4e8f-4862-a9d4-5e5896fa764c"/>
+				<text><![CDATA[お問い合わせ先：
+カスタマーサポート]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="400" y="0" width="100" height="30" uuid="5db22c20-bf7b-42ce-b444-8c9045094b74"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["ページ： " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="500" y="0" width="100" height="30" uuid="3868115b-57a1-4bc9-9413-ad91c4e36c8f"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA["/  " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="390" y="30" width="140" height="30" uuid="891933e3-0d5f-4b1f-b4f6-7b39758d1058"/>
+				<textFieldExpression><![CDATA["作成基準日：" + $P{ctime}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="410" y="50" width="130" height="30" uuid="286e1587-7452-4b3d-b444-88bd9b4bf79a"/>
+				<textFieldExpression><![CDATA["発行日：" + $P{ptime}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="135">
+			<staticText>
+				<reportElement x="140" y="40" width="200" height="30" uuid="a7337f46-c8fc-4b19-abeb-20dc877130b0"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[取引残高報告書（月次）]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="40" y="70" width="160" height="20" uuid="03749049-43ba-4eb3-8851-9a57c3c8c3f9"/>
+				<textFieldExpression><![CDATA["【アカウントID】"+$P{uid}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="340" y="70" width="230" height="20" uuid="1d98f683-ec5e-4eb3-a1a3-beb76f8d0b04"/>
+				<textFieldExpression><![CDATA["【対象期間】"+$P{start_time} +"～"+$P{end_time}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="20" y="90" width="535" height="1" uuid="73863834-2cd6-47f4-bbfe-6b86b25d3c90"/>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="50" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="100" y="20" width="160" height="30" backcolor="#E2E2E2" uuid="76b6f549-2e4f-4f87-9066-6ea7318564c8">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f929a783-8ee2-463a-874e-62035b84e6f5"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[残高（円・暗号資産）]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="50" y="20" width="50" height="30" backcolor="#E2E2E2" uuid="d9cca72b-fe7b-4e88-9022-73be9904513f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6675899b-fb23-4755-a7ee-f9931aa8dce9"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[種類]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="50" y="5" width="90" height="15" uuid="08a596e2-77b6-4441-8de1-060f1475f49f"/>
+				<text><![CDATA[【残高明細】]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement mode="Transparent" x="100" y="0" width="160" height="30" forecolor="#030000" backcolor="#000000" uuid="5ffc937f-3631-463e-909e-381981d6cab4">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f929a783-8ee2-463a-874e-62035b84e6f5"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{balance}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="50" y="0" width="50" height="30" forecolor="#030000" backcolor="#000000" uuid="a0ee1669-a0e4-4f32-86fe-0be0636cb176">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6675899b-fb23-4755-a7ee-f9931aa8dce9"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{coin}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
