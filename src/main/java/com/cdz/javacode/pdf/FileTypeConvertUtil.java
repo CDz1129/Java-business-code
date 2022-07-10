@@ -28,17 +28,18 @@ public class FileTypeConvertUtil {
         renderer.setDocument(url);
 
         // 图片为本地的绝对路径时,如http://www.baidu.com/a.jpg,则为<img src="a.jpg" />
-        renderer.getSharedContext().setBaseURL("http://www.baidu.com/");
-        // 图片为HTTP链接时，src只需填写相对路径，如D:/a.jpg,则为<img src="a.jpg" />
-        renderer.getSharedContext().setBaseURL("file:/D:/");
+//        renderer.getSharedContext().setBaseURL("http://www.baidu.com/");
+//        // 图片为HTTP链接时，src只需填写相对路径，如D:/a.jpg,则为<img src="a.jpg" />
+//        renderer.getSharedContext().setBaseURL("file:/D:/");
 
         // step 3 解决中文支持
         ITextFontResolver fontResolver = renderer.getFontResolver();
-        if("linux".equals(getCurrentOperatingSystem())){
-            fontResolver.addFont("/usr/share/fonts/chiness/simsun.ttc", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-        }else{
-            fontResolver.addFont("c:/Windows/Fonts/simsun.ttc", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
-        }
+        fontResolver.addFont("/Users/cdz/IdeaProjects/Java-business-code/src/main/resources/jaspers/fonts/simsun.ttc", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+//
+//        if("mac".equals(getCurrentOperatingSystem())){
+//        }else{
+//            fontResolver.addFont("c:/Windows/Fonts/simsun.ttc", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+//        }
 
         renderer.layout();
         renderer.createPDF(os);
@@ -56,10 +57,11 @@ public class FileTypeConvertUtil {
 
 
     public static void main(String[] args) {
-        String htmlFile = "E:/ami.html";
-        String pdfFile = "E:/ami.pdf";
+
+        String htmlPath = "/Users/cdz/IdeaProjects/Java-business-code/src/main/resources/pdf_demo.html";
+        String pdfPath = "/Users/cdz/IdeaProjects/Java-business-code/src/main/resources/test.pdf";
         try {
-            FileTypeConvertUtil.html2pdf(htmlFile, pdfFile);
+            FileTypeConvertUtil.html2pdf(htmlPath, pdfPath);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (Exception e) {
