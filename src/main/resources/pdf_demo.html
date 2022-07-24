@@ -3,34 +3,52 @@
   <head>
   </head>
   <style>
+    @page {
+      size: A4;
+      @top-center {
+        content: element(header);
+      }
+      @bottom-center {
+        content: '';
+        font-family: 'simsun', serif;
+      }
+    }
+
+    html, body {
+      font-family: 'simsun', serif;
+    }
+
     table {
-    border-collapse: collapse;
-    border-spacing: 0;
+      -fs-table-paginate: paginate;
+      border-collapse: collapse;
     }
-    th{
-      border:1px solid #dddddd;
-      min-width:8px;
-      font-weight:bold;
-      text-align: center;
-      background-color:#f0f0f0;
-      min-height: 28px;
-      line-height: 28px;
-      padding: 4px 6px;
+
+    table, td, th {
+      border: 1px solid #555;
+      padding: 3px 5px;
     }
-    td{
-      border:1px solid #ddd;
-      min-width:8px;
-      text-align:left;
-      text-align:left;
-      min-height: 28px;
-      line-height: 28px;
-      padding: 4px 6px;
+
+    th {
+      background-color: #eff3fa;
     }
-     body{
-            font-family:simsun;
-        }
+
+    #page-header {
+      position: running(header);
+      border-bottom: 1px solid #555;
+      padding: 5px;
+    }
+
+    #page-header-text {
+      font-size: 16px;
+    }
+
+    #page-header-num:after {
+      float: right;
+      text-align: right;
+      content: counter(page) '/' counter(pages);
+    }
   </style>
-  <body style="padding: 10px 100px 10px 100px; width: 1000px; box-sizing: border-box; font-size: 12px">
+  <body>
     <p style="text-align: right">作成基準日：2022/08/21</p>
     <p style="text-align: right">発行日：2022/08/21</p>
     <div style="margin-bottom: 40px; clear:both; height: 200px;">
@@ -38,7 +56,6 @@
         <p>お問い合わせ先：</p>
         <p>カスタマーサポート</p>
         <p>https://www.decurret.com/support/</p>
-        <p>这是中文中文啊 and hdyzpkyk</p>
       </div>
       <div style="float: right;">
         <p>株式会社ディーカレット</p>
@@ -49,11 +66,12 @@
         <p>一般社団法人日本暗号資産取引業協会</p>
       </div>
     </div>
-    <p style="text-align: center; font-weight: 700; font-size: 20px">取引残高報告書（月次）</p>
-    <p style="border-bottom: 1px solid #ccc; padding: 0 10px; clear:both; height: 20px; margin-bottom: 10px;">
+    <div id="page-header">
+      <span id="page-header-num"></span>
+      <span id="page-header-text">取引残高報告書（月次）</span>
       <span style="float: left">【アカウントID】12315421</span>
       <span style="float: right">【対象期間】2022/05/01 ～ 2022/05/31</span>
-    </p>
+    </div>
     <p>【残高明細】</p>
     <table style="width: 400px">
     <tbody style="width: 400px;"> 
@@ -71,8 +89,8 @@
     <table style="width: 700px">
     <tbody style="width: 700px;"> 
       <tr> 
-      <th style="width: 200px;"> 注文番号</th> 
-      <th style="width: 100px;"> 銘柄</th> 
+      <th style="width: 220px;"> 注文番号</th> 
+      <th style="width: 50px;"> 銘柄</th> 
       <th style="width: 50px;"> 売買 </th> 
       <th style="width: 200px;"> 約定数量 </th> 
       <th style="width: 200px;"> 約定価格(円・暗号資産) </th> 
@@ -90,7 +108,7 @@
       <td style="width: 200px;">12,452</td> 
       </tr> 
       <tr>
-        <td colspan="3"> 2022/03/31</td> 
+        <td colspan="3" style="text-align:right"> 2022/03/31 00:00:00</td> 
       <td style="width: 300px;"> 15,000</td> 
       <td style="width: 300px;"> 10</td> 
       </tr>
@@ -104,7 +122,7 @@
     <tbody style="width: 700px;"> 
       <tr> 
       <th style="width: 150px;"> 入出金番号</th> 
-      <th style="width: 200px;"> 日時</th> 
+      <th style="width: 150px;"> 日時</th> 
       <th style="width: 50px;"> 科目 </th> 
       <th style="width: 200px;"> 入金額(円・暗号資産) </th> 
       <th style="width: 200px;">  出金額(円・暗号資産) </th> 

@@ -11,8 +11,8 @@ import java.nio.charset.Charset;
 
 public class HtmlToPdf {
 
-    static String htmlPath = "/Users/cdz/IdeaProjects/Java-business-code/src/main/resources/pdf_demo.html";
-    static String pdfPath = "/Users/cdz/IdeaProjects/Java-business-code/src/main/resources/test.pdf";
+    static String htmlPath = "D:\\Users\\david.chen\\IdeaProjects\\Java-business-code\\src\\main\\resources\\pdf_demo.html";
+    static String pdfPath = "D:\\Users\\david.chen\\IdeaProjects\\Java-business-code\\src\\main\\resources\\test.pdf";
     public static void main(String[] args) {
         String content = "";
         File htmlFile = new File(htmlPath);
@@ -78,7 +78,7 @@ public class HtmlToPdf {
             document.open();
             // 解决PDF中文不显示
             XMLWorkerFontProvider fontImp = new XMLWorkerFontProvider(XMLWorkerFontProvider.DONTLOOKFORFONTS);
-            fontImp.register("/Users/cdz/IdeaProjects/Java-business-code/src/main/resources/jaspers/fonts/simsun.ttc");
+            fontImp.register("jaspers"+File.separator+"fonts"+File.separator+"simsun.ttc");
             XMLWorkerHelper.getInstance().parseXHtml(pdfwriter,
                     document,
                     new FileInputStream(htmlPath), null, Charset.forName("UTF-8"), fontImp);

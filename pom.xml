@@ -19,6 +19,7 @@
         <spring-cloud.version>Greenwich.SR4</spring-cloud.version>
         <spring-data.version>Moore-SR4</spring-data.version>
         <hutool.version>5.0.0</hutool.version>
+        <openhtml.version>1.0.10</openhtml.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -229,6 +230,55 @@
             <groupId>com.itextpdf</groupId>
             <artifactId>itext-asian</artifactId>
             <version>5.2.0</version>
+        </dependency>
+        <dependency>
+            <!-- ALWAYS required, usually included transitively. -->
+            <groupId>com.openhtmltopdf</groupId>
+            <artifactId>openhtmltopdf-core</artifactId>
+            <version>${openhtml.version}</version>
+        </dependency>
+
+        <dependency>
+            <!-- Required for PDF output. -->
+            <groupId>com.openhtmltopdf</groupId>
+            <artifactId>openhtmltopdf-pdfbox</artifactId>
+            <version>${openhtml.version}</version>
+        </dependency>
+
+        <dependency>
+            <!-- Required for image output only. -->
+            <groupId>com.openhtmltopdf</groupId>
+            <artifactId>openhtmltopdf-java2d</artifactId>
+            <version>${openhtml.version}</version>
+        </dependency>
+
+        <dependency>
+            <!-- Optional, leave out if you do not need right-to-left or bi-directional text support. -->
+            <groupId>com.openhtmltopdf</groupId>
+            <artifactId>openhtmltopdf-rtl-support</artifactId>
+            <version>${openhtml.version}</version>
+        </dependency>
+
+        <dependency>
+            <!-- Optional, leave out if you do not need logging via slf4j. -->
+            <groupId>com.openhtmltopdf</groupId>
+            <artifactId>openhtmltopdf-slf4j</artifactId>
+            <version>${openhtml.version}</version>
+        </dependency>
+
+        <dependency>
+            <!-- Optional, leave out if you do not need SVG support. -->
+            <groupId>com.openhtmltopdf</groupId>
+            <artifactId>openhtmltopdf-svg-support</artifactId>
+            <version>${openhtml.version}</version>
+        </dependency>
+
+        <dependency>
+            <!-- Optional, leave out if you do not need MathML support. -->
+            <!-- Introduced in RC-13. -->
+            <groupId>com.openhtmltopdf</groupId>
+            <artifactId>openhtmltopdf-mathml-support</artifactId>
+            <version>${openhtml.version}</version>
         </dependency>
     </dependencies>
 
